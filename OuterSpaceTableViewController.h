@@ -1,5 +1,5 @@
 //
-//  ViewController.h
+//  OuterSpaceTableViewController.h
 //  Out of this World
 //
 //  Created by Srikanth on 5/27/15.
@@ -8,8 +8,8 @@
 
 #import <UIKit/UIKit.h>
 
-@interface ViewController : UIViewController
+@interface OuterSpaceTableViewController : UITableViewController
 
+@property (strong, nonatomic) NSMutableArray *planets;
 
 @end
-
