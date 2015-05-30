@@ -7,6 +7,10 @@
 //
 
 #import "OuterSpaceTableViewController.h"
+#import "AstronomicalData.h"
+#import "SpaceObject.h"
+#import "SpaceImageViewController.h"
+#import "SpaceDataViewController.h"
 
 @interface OuterSpaceTableViewController ()
 
@@ -25,24 +29,35 @@
     
     self.planets = [[NSMutableArray alloc] init];
     
-    NSString *planet1 = @"Mercury";
-    NSString *planet2 = @"Venus";
-    NSString *planet3 = @"Earth";
-    NSString *planet4 = @"Mars";
-    NSString *planet5 = @"Jupiter";
-    NSString *planet6 = @"Saturn";
-    NSString *planet7 = @"Uranus";
-    NSString *planet8 = @"Neptune";
+    for(NSMutableDictionary *planetData in [AstronomicalData allKnownPlanets])
+    {
+        NSString *imageName = [NSString stringWithFormat:@"%@.jpg", planetData[PLANET_NAME]];
+        SpaceObject *planet = [[SpaceObject alloc] initWithData:planetData andImage:[UIImage imageNamed:imageName]];
+        [self.planets addObject:planet];
+    }
     
-    [self.planets addObject:planet1];
-    [self.planets addObject:planet2];
-    [self.planets addObject:planet3];
-    [self.planets addObject:planet4];
-    [self.planets addObject:planet5];
-    [self.planets addObject:planet6];
-    [self.planets addObject:planet7];
-    [self.planets addObject:planet8];
-    
+}
+
+-(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
+{
+    if([sender isKindOfClass:[UITableViewCell class]])
+    {
+        if([segue.destinationViewController isKindOfClass:[SpaceImageViewController class]])
+        {
+            SpaceImageViewController *nextViewController = segue.destinationViewController;
+            NSIndexPath *path = [self.tableView indexPathForCell:sender];
+            nextViewController.spaceObject = self.planets[path.row];
+        }
+    }
+    if([sender isKindOfClass:[NSIndexPath class]])
+    {
+        if([segue.destinationViewController isKindOfClass:[SpaceDataViewController class]])
+        {
+            SpaceDataViewController *targetViewController = segue.destinationViewController;
+            NSIndexPath *path = sender;
+            targetViewController.spaceObject = self.planets[path.row];
+        }
+    }
 }
 
 - (void)didReceiveMemoryWarning {
@@ -68,9 +83,22 @@
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
     
     // Configure the cell...
-    cell.textLabel.text = [self.planets objectAtIndex:indexPath.row];
+    SpaceObject *planet = [self.planets objectAtIndex:indexPath.row];
+    cell.textLabel.text = planet.name;
+    cell.detailTextLabel.text = planet.nickname;
+    cell.imageView.image = planet.spaceImage;
+    
+    cell.backgroundColor = [UIColor clearColor];
+    cell.textLabel.textColor = [UIColor whiteColor];
+    cell.detailTextLabel.textColor = [UIColor colorWithWhite:0.5 alpha:1.0];
     
     return cell;
+}
+
+#pragma mark UITableView Delegate
+-(void)tableView:(UITableView *)tableView accessoryButtonTappedForRowWithIndexPath:(NSIndexPath *)indexPath
+{
+    [self performSegueWithIdentifier:@"push to space data" sender:indexPath];
 }
 
 
