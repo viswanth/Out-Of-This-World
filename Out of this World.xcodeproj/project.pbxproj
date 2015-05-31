@@ -20,6 +20,7 @@
 		848B1AFD1B1A355400C40CCE /* SpaceObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 848B1AFC1B1A355400C40CCE /* SpaceObject.m */; };
 		848B1B001B1A425200C40CCE /* SpaceImageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 848B1AFF1B1A425200C40CCE /* SpaceImageViewController.m */; };
 		848B1B031B1A4DDA00C40CCE /* SpaceDataViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 848B1B021B1A4DDA00C40CCE /* SpaceDataViewController.m */; };
+		848B1B061B1A712A00C40CCE /* AddSpaceObjectViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 848B1B051B1A712A00C40CCE /* AddSpaceObjectViewController.m */; };
 		84DFAF381B16E7A600F8DF44 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 84DFAF371B16E7A600F8DF44 /* main.m */; };
 		84DFAF3B1B16E7A600F8DF44 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 84DFAF3A1B16E7A600F8DF44 /* AppDelegate.m */; };
 		84DFAF3E1B16E7A600F8DF44 /* Out_of_this_World.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 84DFAF3C1B16E7A600F8DF44 /* Out_of_this_World.xcdatamodeld */; };
@@ -58,6 +59,8 @@
 		848B1AFF1B1A425200C40CCE /* SpaceImageViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SpaceImageViewController.m; sourceTree = "<group>"; };
 		848B1B011B1A4DDA00C40CCE /* SpaceDataViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SpaceDataViewController.h; sourceTree = "<group>"; };
 		848B1B021B1A4DDA00C40CCE /* SpaceDataViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SpaceDataViewController.m; sourceTree = "<group>"; };
+		848B1B041B1A712900C40CCE /* AddSpaceObjectViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AddSpaceObjectViewController.h; sourceTree = "<group>"; };
+		848B1B051B1A712A00C40CCE /* AddSpaceObjectViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AddSpaceObjectViewController.m; sourceTree = "<group>"; };
 		84DFAF321B16E7A600F8DF44 /* Out of this World.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Out of this World.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		84DFAF361B16E7A600F8DF44 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		84DFAF371B16E7A600F8DF44 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -132,6 +135,8 @@
 				84DFAF391B16E7A600F8DF44 /* AppDelegate.h */,
 				84DFAF3A1B16E7A600F8DF44 /* AppDelegate.m */,
 				84DFAF421B16E7A600F8DF44 /* Main.storyboard */,
+				848B1B041B1A712900C40CCE /* AddSpaceObjectViewController.h */,
+				848B1B051B1A712A00C40CCE /* AddSpaceObjectViewController.m */,
 				848B1B011B1A4DDA00C40CCE /* SpaceDataViewController.h */,
 				848B1B021B1A4DDA00C40CCE /* SpaceDataViewController.m */,
 				848B1AFE1B1A425200C40CCE /* SpaceImageViewController.h */,
@@ -284,6 +289,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				84DFAF631B16F43500F8DF44 /* AstronomicalData.m in Sources */,
+				848B1B061B1A712A00C40CCE /* AddSpaceObjectViewController.m in Sources */,
 				848B1B031B1A4DDA00C40CCE /* SpaceDataViewController.m in Sources */,
 				848B1AFD1B1A355400C40CCE /* SpaceObject.m in Sources */,
 				848B1B001B1A425200C40CCE /* SpaceImageViewController.m in Sources */,

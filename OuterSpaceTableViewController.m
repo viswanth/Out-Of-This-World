@@ -18,6 +18,22 @@
 
 @implementation OuterSpaceTableViewController
 
+#pragma mark - Lazy Instantiation of Properties
+
+-(NSMutableArray *)planets{
+    if(!_planets){
+        _planets = [[NSMutableArray alloc] init];
+    }
+    return _planets;
+}
+
+-(NSMutableArray *)addedSpaceObjects{
+    if(!_addedSpaceObjects){
+        _addedSpaceObjects = [[NSMutableArray alloc] init];
+    }
+    return _addedSpaceObjects;
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     
@@ -26,8 +42,6 @@
     
     // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
     // self.navigationItem.rightBarButtonItem = self.editButtonItem;
-    
-    self.planets = [[NSMutableArray alloc] init];
     
     for(NSMutableDictionary *planetData in [AstronomicalData allKnownPlanets])
     {
@@ -46,7 +60,11 @@
         {
             SpaceImageViewController *nextViewController = segue.destinationViewController;
             NSIndexPath *path = [self.tableView indexPathForCell:sender];
-            nextViewController.spaceObject = self.planets[path.row];
+            if(path.section == 0){
+                nextViewController.spaceObject = self.planets[path.row];
+            }else{
+                nextViewController.spaceObject = self.addedSpaceObjects[path.row];
+            }
         }
     }
     if([sender isKindOfClass:[NSIndexPath class]])
@@ -55,8 +73,17 @@
         {
             SpaceDataViewController *targetViewController = segue.destinationViewController;
             NSIndexPath *path = sender;
-            targetViewController.spaceObject = self.planets[path.row];
+            if(path.section == 0){
+                targetViewController.spaceObject = self.planets[path.row];
+            }else{
+                targetViewController.spaceObject = self.addedSpaceObjects[path.row];
+            }
         }
+    }
+    if([segue.destinationViewController isKindOfClass:[AddSpaceObjectViewController class]])
+    {
+        AddSpaceObjectViewController *addSpaceObjectVC = segue.destinationViewController;
+        addSpaceObjectVC.delegate = self;
     }
 }
 
@@ -65,16 +92,38 @@
     // Dispose of any resources that can be recreated.
 }
 
+#pragma mark - AddSpaceObjectViewController Delegate
+-(void)didCancel
+{
+    [self dismissViewControllerAnimated:YES completion:nil];
+}
+
+-(void)addSpaceObject:(SpaceObject *)spaceObject
+{
+    [self.addedSpaceObjects addObject:spaceObject];
+    [self dismissViewControllerAnimated:YES completion:nil];
+    [self.tableView reloadData];
+}
+
+
 #pragma mark - Table view data source
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
     // Return the number of sections.
-    return 1;
+    if([self.addedSpaceObjects count]){
+        return 2;
+    }else{
+        return 1;
+    }
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     // Return the number of rows in the section.
-    return [self.planets count];
+    if(section == 1){
+        return [self.addedSpaceObjects count];
+    }else{
+        return [self.planets count];
+    }
 }
 
 
@@ -83,15 +132,27 @@
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
     
     // Configure the cell...
-    SpaceObject *planet = [self.planets objectAtIndex:indexPath.row];
-    cell.textLabel.text = planet.name;
-    cell.detailTextLabel.text = planet.nickname;
-    cell.imageView.image = planet.spaceImage;
     
+    if(indexPath.section == 1){
+        //Use new space object to customize our cell
+        SpaceObject *planet = [self.addedSpaceObjects objectAtIndex:indexPath.row];
+        cell.textLabel.text = planet.name;
+        cell.detailTextLabel.text = planet.nickname;
+        cell.imageView.image = planet.spaceImage;
+    }else{
+        /* Access the SpaceObject from our planets array. Use the SpaceObject's properties to 
+         update the cell's properties*/
+        SpaceObject *planet = [self.planets objectAtIndex:indexPath.row];
+        cell.textLabel.text = planet.name;
+        cell.detailTextLabel.text = planet.nickname;
+        cell.imageView.image = planet.spaceImage;
+    }
+    
+    //Customize the appearance of the TableViewCells.
     cell.backgroundColor = [UIColor clearColor];
     cell.textLabel.textColor = [UIColor whiteColor];
     cell.detailTextLabel.textColor = [UIColor colorWithWhite:0.5 alpha:1.0];
-    
+        
     return cell;
 }
 
